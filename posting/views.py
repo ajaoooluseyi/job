@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-
+from django.shortcuts import render
 from .models import JobPosition
 
 
@@ -17,3 +17,7 @@ def search_job_positions(request):
         return JsonResponse({"job_positions": list(job_positions)})
     else:
         return JsonResponse({"error": "Invalid request method."}, status=400)
+
+
+def home_view(request):
+    return render(request, "home_page.html")
