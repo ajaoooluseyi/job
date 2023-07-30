@@ -1,5 +1,5 @@
 from django.contrib import admin
 
-from . import models
+from posting import models
 
-admin.register(models.JobPosition)
+admin.site.register(models.JobPosition)

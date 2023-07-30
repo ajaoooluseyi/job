@@ -22,5 +22,6 @@ from posting import views
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('api/job-positions/', views.get_job_positions, name='get_job_positions'),
+    path('api/search-job-positions/', views.search_job_positions, name='search_job_positions'),
     path('', views.home_view, name='home'),
 ]

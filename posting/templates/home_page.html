@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recruitment</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .welcome-header {
+            background-color: rgba(221, 231, 227, 0.801);
+            width: 100%;
+            padding: 20px 0;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            background-color: #333;
+            padding: 20px;
+        }
+
+        .card {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+
+        .job-card {
+            flex: 1 1 300px;
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: rgba(221, 231, 227, 0.801);
+            transition: background-color 0.3s ease;
+        }
+
+        .job-card:hover {
+            background-color: #6e6d59;        
+        }
+        .search-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .search-container > * {
+            margin-bottom: 10px;
+        }    
+    </style>
+</head>
+
+<body class="bg-gray-100" style="background-color: #333;">
+    <div class="welcome-header">
+        <h1 class="text-4xl font-bold mb-4">Welcome to our Recruitment Website</h1>
+        <p class="text-lg mb-4">We help companies find top talent in the field of Software Engineering, Product
+            Management, Data Science, and more.</p>
+    </div>
+    <div class="container mx-auto px-4 py-8">
+        <div class="search-container" id="jobPositionsContainer">
+            <h2 class="text-2xl font-bold text-white mb-4" text-align="center">Search for a job</h2>
+            <input type="text" id="jobPositionSelect" class="p-2 border rounded-md" text-align="center"
+                placeholder="Search for a job e.g. Software Developer">
+            <button class="mt-4 px-6 py-3 bg-black-500 text-white rounded-md shadow-md hover:bg-blue-600" text-align="center"
+                onclick="searchForJob()">Search</button>
+        </div>
+        <div class="mt-8" id="allJobPositionsContainer">
+            <a class="mt-4 px-6 py-3 bg-black-500 text-white rounded-md shadow-md hover:bg-blue-600"
+                onclick="fetchJobPositions()">Check for all available jobs</a>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+        <script>
+            function fetchJobPositions() {
+                axios.get('/api/job-positions/')
+                    .then(response => {
+                        const jobPositions = response.data.job_positions;
+                        displayJobPositions(jobPositions);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching job positions:', error);
+                    });
+            }
+            // Function to show the selected job position
+            function searchForJob() {
+                const jobPositionSelect = document.getElementById('jobPositionSelect');
+                const selectedJob = jobPositionSelect.value;
+
+                if (selectedJob) {
+                    axios.get(`/api/search-job-positions/?selected_job=${selectedJob}`)
+                        .then(response => {
+                            const jobPositions = response.data.job_positions;
+                            displayJobPositions(jobPositions);
+                        })
+                        .catch(error => {
+                            console.error('Error searching for job positions:', error);
+                        });
+                } else {
+                    alert('Please select a job position.');
+                }
+            }
+
+            function displayJobPositions(jobPositions) {
+                const jobPositionsContainer = document.getElementById('jobPositionsContainer');
+
+                if (jobPositions.length === 0) {
+                    jobPositionsContainer.innerHTML = '<p>No job positions available.</p>';
+                } else {
+                    let html = '<h2 class="text-2xl font-bold mb-4">Job Positions</h2>';
+                    html += '<div class="card" >';
+                    jobPositions.forEach(job => {
+                        html += `<div class="job-card" >
+                            <strong>${job.title}</strong>
+                            <br> 
+                            <span> Location is ${job.location}<span>
+                                <br>
+                            <span> Skills required are ${job.skills}<span>
+                                <br>
+                            </div>`;
+                    });
+                    html += '</div>';
+                    jobPositionsContainer.innerHTML = html;
+                }
+            }
+        </script>
+        <br>
+        <a href="/" class="text-blue-500 underline">Home</a>
+    </div>
+</body>
+
+</html>
