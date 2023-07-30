@@ -14,12 +14,79 @@
 <body class="bg-gray-100">
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-4xl font-bold mb-4">Welcome to our Recruitment Startup</h1>
-        <p class="text-lg mb-4">We help companies find top talent in the field of Software Engineering, Product Management, Data Science, and more.</p>
+        <p class="text-lg mb-4">We help companies find top talent in the field of Software Engineering, Product
+            Management, Data Science, and more.</p>
         <button class="px-6 py-3 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600">Get Started</button>
     </div>
+    <div class="mt-8" id="jobPositionsContainer">
+        <h2 class="text-2xl font-bold mb-4">Select a Job Position</h2>
+        <select id="jobPositionSelect" class="p-2 border rounded-md">
+            <option value="">-- Select a Job Position --</option>
+            <option value="Software Engineer">Software Engineer</option>
+            <option value="Product Manager">Product Manager</option>
+            <option value="Data Scientist">Data Scientist</option>
+            <option value="Frontend Developer">Frontend Developer</option>
+            <option value="Backend Developer">Backend Developer</option>
+            <option value="Python Developer">Python Developer</option>
+        </select>
+        <button class="mt-4 px-6 py-3 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600"
+            onclick="showSelectedJob()">Show Selected Job</button>
+    </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     <script>
         // Custom JavaScript logic can be added here
+
+        // Function to fetch job positions from the backend API
+        function fetchJobPositions() {
+            axios.get('/api/job-positions/')
+                .then(response => {
+                    const jobPositions = response.data.job_positions;
+                    displayJobPositions(jobPositions);
+                })
+                .catch(error => {
+                    console.error('Error fetching job positions:', error);
+                });
+        }
+
+        // Function to display job positions on the page
+        function displayJobPositions(jobPositions) {
+            const jobPositionsContainer = document.getElementById('jobPositionsContainer');
+
+            if (jobPositions.length === 0) {
+                jobPositionsContainer.innerHTML = '<p>No job positions available.</p>';
+            } else {
+                let html = '<h2 class="text-2xl font-bold mb-4">Featured Job Positions</h2>';
+                html += '<ul class="list-disc pl-6">';
+                jobPositions.forEach(job => {
+                    html += `<li>${job.title} - ${job.location}</li>`;
+                });
+                html += '</ul>';
+                jobPositionsContainer.innerHTML = html;
+            }
+        }
+
+        // Function to show the selected job position
+        function searchForJob() {
+            const jobPositionSelect = document.getElementById('jobPositionSelect');
+            const selectedJob = jobPositionSelect.value;
+
+            if (selectedJob) {
+                axios.get(`/api/search-job-positions/?selected_job=${selectedJob}`)
+                    .then(response => {
+                        const jobPositions = response.data.job_positions;
+                        displayJobPositions(jobPositions);
+                    })
+                    .catch(error => {
+                        console.error('Error searching for job positions:', error);
+                    });
+            } else {
+                alert('Please select a job position.');
+            }
+        }
+
+        // Call the fetchJobPositions function when the page loads
+        fetchJobPositions();
     </script>
 </body>
 
