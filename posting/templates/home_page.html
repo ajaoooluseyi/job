@@ -61,15 +61,15 @@
     </div>
     <div class="container mx-auto px-4 py-8">
         <div class="search-container" id="jobPositionsContainer">
-            <h2 class="text-2xl font-bold text-white mb-4" text-align="center">Search for a job</h2>
+            <h2 class="text-2xl font-bold text-white mb-4" text-align="center">Search for a tech role to hire</h2>
             <input type="text" id="jobPositionSelect" class="p-2 border rounded-md" text-align="center"
-                placeholder="Search for a job e.g. Software Developer">
-            <button class="mt-4 px-6 py-3 bg-black-500 text-white rounded-md shadow-md hover:bg-blue-600" text-align="center"
+                placeholder="Search for a role e.g. Software Developer">
+            <button class="mt-4 px-6 py-3 bg-black-500 text-white rounded-md shadow-md hover:bg-blue-600" 
                 onclick="searchForJob()">Search</button>
         </div>
         <div class="mt-8" id="allJobPositionsContainer">
             <a class="mt-4 px-6 py-3 bg-black-500 text-white rounded-md shadow-md hover:bg-blue-600"
-                onclick="fetchJobPositions()">Check for all available jobs</a>
+                onclick="fetchJobPositions()">Check for all available roles</a>
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
         <script>
@@ -112,12 +112,15 @@
                     html += '<div class="card" >';
                     jobPositions.forEach(job => {
                         html += `<div class="job-card" >
-                            <strong>${job.title}</strong>
+                            <strong>${job.name}</strong>
                             <br> 
-                            <span> Location is ${job.location}<span>
+                            <span> <strong>Role:</strong> ${job.title}<span>
                                 <br>
-                            <span> Skills required are ${job.skills}<span>
+                            <span> <strong>Skills:</strong> ${job.skills}<span>
                                 <br>
+                            <span> <strong>Experience Level:</strong> ${job.experience}<span>
+                                <br>    
+                            <span> <strong>Location:</strong> ${job.location}<span>    
                             </div>`;
                     });
                     html += '</div>';
