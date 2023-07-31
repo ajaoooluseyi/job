@@ -3,10 +3,10 @@ from django.db import models
 
 class JobPosition(models.Model):
     CHOICES = (
-        ('fresher', 'Fresher'),
-        ('entry level', 'Entry Level'),
-        ('intermediate', 'Intermediate'),
-        ('expert', 'Expert'),
+        ('Fresher', 'Fresher'),
+        ('Entry Level', 'Entry Level'),
+        ('Intermediate', 'Intermediate'),
+        ('Expert', 'Expert'),
     )
     name = models.CharField(max_length=100)
     title = models.CharField(max_length=100)
@@ -16,4 +16,4 @@ class JobPosition(models.Model):
     posted_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.name, self.title
+        return f"{self.name}: {self.title}"

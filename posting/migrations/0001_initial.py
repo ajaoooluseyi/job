@@ -29,10 +29,10 @@ class Migration(migrations.Migration):
                     "experience",
                     models.CharField(
                         choices=[
-                            ("fresher", "Fresher"),
-                            ("entry level", "Entry Level"),
-                            ("intermediate", "Intermediate"),
-                            ("expert", "Expert"),
+                            ("Fresher", "Fresher"),
+                            ("Entry Level", "Entry Level"),
+                            ("Intermediate", "Intermediate"),
+                            ("Expert", "Expert"),
                         ],
                         max_length=20,
                     ),

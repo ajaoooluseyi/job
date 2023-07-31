@@ -39,17 +39,18 @@
         }
 
         .job-card:hover {
-            background-color: #6e6d59;        
+            background-color: #6e6d59;
         }
+
         .search-container {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        .search-container > * {
+        .search-container>* {
             margin-bottom: 10px;
-        }    
+        }
     </style>
 </head>
 
@@ -61,10 +62,10 @@
     </div>
     <div class="container mx-auto px-4 py-8">
         <div class="search-container" id="jobPositionsContainer">
-            <h2 class="text-2xl font-bold text-white mb-4" text-align="center">Search for a tech role to hire</h2>
+            <h2 class="text-2xl font-bold text-white mb-4" text-align="center">Search for a tech role to find available talent</h2>
             <input type="text" id="jobPositionSelect" class="p-2 border rounded-md" text-align="center"
                 placeholder="Search for a role e.g. Software Developer">
-            <button class="mt-4 px-6 py-3 bg-black-500 text-white rounded-md shadow-md hover:bg-blue-600" 
+            <button class="mt-4 px-6 py-3 bg-black-500 text-white rounded-md shadow-md hover:bg-blue-600"
                 onclick="searchForJob()">Search</button>
         </div>
         <div class="mt-8" id="allJobPositionsContainer">
@@ -106,9 +107,9 @@
                 const jobPositionsContainer = document.getElementById('jobPositionsContainer');
 
                 if (jobPositions.length === 0) {
-                    jobPositionsContainer.innerHTML = '<p>No job positions available.</p>';
+                    jobPositionsContainer.innerHTML = '<p>No job candidates available.</p>';
                 } else {
-                    let html = '<h2 class="text-2xl font-bold mb-4">Job Positions</h2>';
+                    let html = '<h2 class="text-2xl text-white font-bold mb-4">Available Candidates</h2>';
                     html += '<div class="card" >';
                     jobPositions.forEach(job => {
                         html += `<div class="job-card" >
